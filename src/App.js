@@ -20,12 +20,6 @@ class App extends Component {
       }))
   }
 
-  // componentDidMount() {
-  //   return (this.fetchRandomGif(),
-  //           this.fetchRandomGif(),
-  //           this.fetchRandomGif())
-  // }
-
   handleClick = () => {
     return (this.fetchRandomGif(),
             this.fetchRandomGif(),
@@ -46,3 +40,26 @@ class App extends Component {
 }
 
 export default App;
+
+// Welcome text
+// Welcome to the most wonderfully bizarre poem generator on the web.
+// Literature for the meme generation, putting the AI in haiku.
+
+// Welcome button text = "Instructions"
+//
+// Instructions text
+// We are going to show you three GIFs.
+// Your job is to describe each one as concisely and poetically as possible.
+// Make sure you remember to take a small break (just a second will do) between each one.
+// Then, we'll display the poem back to you.
+// Voila!
+
+// Instructions button text = "Ready? GO!"
+//
+// GIF display button text = "Finish"
+//
+// Results text
+// Your poem:
+//
+//
+// Results button text = "Start again!"
