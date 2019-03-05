@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import GifCollection from './GifCollection'
+import ButtonComponent from './ButtonComponent'
 
 class App extends Component {
 
@@ -19,7 +20,13 @@ class App extends Component {
       }))
   }
 
-  componentDidMount() {
+  // componentDidMount() {
+  //   return (this.fetchRandomGif(),
+  //           this.fetchRandomGif(),
+  //           this.fetchRandomGif())
+  // }
+
+  handleClick = () => {
     return (this.fetchRandomGif(),
             this.fetchRandomGif(),
             this.fetchRandomGif())
@@ -27,10 +34,13 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <GifCollection
-          gifs={this.state.gifs} />
-      </div>
+      <React.Fragment>
+        <div className="App">
+          <GifCollection
+            gifs={this.state.gifs} />
+          <ButtonComponent handleClick={this.handleClick}/>
+        </div>
+      </React.Fragment>
     );
   }
 }

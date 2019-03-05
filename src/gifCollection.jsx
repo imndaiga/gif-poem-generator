@@ -8,7 +8,7 @@ class GifCollection extends Component {
       return (
         <div>
         {GifArray.length < 1
-          ?  "the gifs are loading"
+          ?  "click the button to load your GIFs!"
           : <div>{GifArray}</div>
         }
         </div>
