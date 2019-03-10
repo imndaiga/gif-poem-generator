@@ -32,9 +32,9 @@ class App extends Component {
       }))
   }
 
-  toggleListenAndFetchGifs = () => {
+  toggleListenOnAndFetchGifs = () => {
     this.setState({
-      listening: !this.state.listening
+      listening: true
     }, () => this.handleListen())
     return (
     this.fetchRandomGif(),
@@ -43,32 +43,42 @@ class App extends Component {
   }
 
 
-  handleListen() {
+  handleListen = () => {
+    let poem = []
     if (this.state.listening) {
-      let poem = []
+      recognition.onstart = () => {console.log("listening!")}
       recognition.start()
-      // recognition.onend = () => recognition.start()
+      recognition.onend = () => recognition.start()
       recognition.onresult = event => {
-        poem.push(event.results[0][0].transcript.toString())
-        this.setState({
-          capturedPoem: poem
-        })
+        poem.push(event.results[0][0].transcript)
       }
     } else {
-      recognition.end()
+      recognition.stop()
+      recognition.onend = () => {
+        console.log("stopped listening!")
+      }
     }
-    console.log("captured poem:", this.state.capturedPoem)
+
+    this.setState({
+      capturedPoem: poem
+    })
+    console.log("check stored poem in state:", this.state.capturedPoem)
+  }
+
+  endListening = () => {
+    this.setState({
+      listening: false
+    }, () => this.handleListen())
   }
 
 
   render() {
-    console.log(this.state.listening);
     return (
       <React.Fragment>
         <Route exact path="/" component={() => <WelcomePage />} />
-        <Route path="/instructions" component={() => <InstructionsPage toggleListenAndFetchGifs={this.toggleListenAndFetchGifs} />} />
-        <Route path="/gifs" component={() => <GifPage gifs={this.state.gifs} toggleListenAndFetchGifs={this.toggleListenAndFetchGifs} />} />
-        <Route path="/results" component={() => <ResultsPage />} />
+        <Route path="/instructions" component={() => <InstructionsPage toggleListenOnAndFetchGifs={this.toggleListenOnAndFetchGifs} />} />
+        <Route path="/gifs" component={() => <GifPage gifs={this.state.gifs} endListening={this.endListening} />} />
+        <Route path="/results" component={() => <ResultsPage results={this.state.capturedPoem} />} />
       </React.Fragment>
     );
   }

@@ -9,7 +9,7 @@ class GifPage extends React.Component {
       <React.Fragment>
         <GifCollection
           gifs={this.props.gifs} />
-        <button><Link to ="/results" onClick={() => this.props.toggleListenAndFetchGifs()}>Finished!</Link></button>
+        <button><Link to ="/results" onClick={() => this.props.endListening()}>Finished!</Link></button>
       </React.Fragment>
     )
   }
