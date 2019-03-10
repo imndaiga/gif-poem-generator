@@ -1,9 +1,15 @@
 import React from 'react'
 
-const ButtonComponent = (props) => {
-  return (
-    <button onClick={props.handleClick}>CLICK IT</button>
-  )
+class ButtonComponent extends React.Component {
+
+// const buttonInnerText
+
+  render() {
+    console.log(this)
+    return (
+      <button id="button" onClick={this.props.handleClick}>CLICK IT</button>
+    )
+  }
 }
 
 export default ButtonComponent

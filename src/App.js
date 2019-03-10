@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import './App.css';
-import GifCollection from './GifCollection'
-import ButtonComponent from './ButtonComponent'
+import { Route } from 'react-router-dom'
+import WelcomePage from './WelcomePage'
+import InstructionsPage from './InstructionsPage'
+import GifPage from './GifPage'
+import ResultsPage from './ResultsPage'
+
 
 class App extends Component {
 
@@ -20,20 +24,40 @@ class App extends Component {
       }))
   }
 
-  handleClick = () => {
+  componentDidMount() {
     return (this.fetchRandomGif(),
             this.fetchRandomGif(),
             this.fetchRandomGif())
   }
 
+
+  handleWelcomeButtonClick = () => {
+    //push the browser to "/instructions"
+    console.log("u hit the welcome button!")
+  }
+
+  handleInstructionsButtonClick = () => {
+    //push the browser to "/gifs"
+  }
+
+  handleGetGifsClick = () => {
+    this.setState({ gifs: []})
+    return (this.fetchRandomGif(),
+    this.fetchRandomGif(),
+    this.fetchRandomGif())
+  }
+
+  handleResultsButtonClick = () => {
+    //push the browser to "/"
+  }
+
   render() {
     return (
       <React.Fragment>
-        <div className="App">
-          <GifCollection
-            gifs={this.state.gifs} />
-          <ButtonComponent handleClick={this.handleClick}/>
-        </div>
+        <Route exact path="/" component={() => <WelcomePage handleClick={this.handleWelcomeButtonClick} />} />
+        <Route path="/instructions" component={() => <InstructionsPage handleClick={this.handleInstructionsButtonClick} />} />
+        <Route path="/gifs" component={() => <GifPage gifs={this.state.gifs} handleClick={this.handleGetGifsClick} />} />
+        <Route path="/results" component={() => <ResultsPage handleClick={this.handleResultsButtonClick} />} />
       </React.Fragment>
     );
   }
@@ -41,9 +65,6 @@ class App extends Component {
 
 export default App;
 
-// Welcome text
-// Welcome to the most wonderfully bizarre poem generator on the web.
-// Literature for the meme generation, putting the AI in haiku.
 
 // Welcome button text = "Instructions"
 //
