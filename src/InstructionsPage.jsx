@@ -12,7 +12,7 @@ class InstructionsPage extends React.Component {
           <p>Then, we'll display the poem back to you.</p>
           <p>Voila!</p>
         </div>
-        <button><Link to ="/gifs">Begin!</Link></button>
+        <button><Link to ="/gifs" onClick={() => this.props.handleGetGifsClick()}>Begin!</Link></button>
       </React.Fragment>
     )
   }

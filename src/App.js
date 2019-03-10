@@ -6,11 +6,19 @@ import InstructionsPage from './InstructionsPage'
 import GifPage from './GifPage'
 import ResultsPage from './ResultsPage'
 
+window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition
+const recognition = new window.SpeechRecognition()
+
+recognition.continous = true
+recognition.lang = 'en-US'
+
 
 class App extends Component {
 
   state = {
     gifs: [],
+    listening: false,
+    capturedPoem: ""
   }
 
   fetchRandomGif = () => {
@@ -30,34 +38,53 @@ class App extends Component {
             this.fetchRandomGif())
   }
 
-
-  handleWelcomeButtonClick = () => {
-    //push the browser to "/instructions"
-    console.log("u hit the welcome button!")
-  }
-
-  handleInstructionsButtonClick = () => {
-    //push the browser to "/gifs"
-  }
-
   handleGetGifsClick = () => {
-    this.setState({ gifs: []})
-    return (this.fetchRandomGif(),
+    this.setState({
+      gifs: [],
+      listening: true
+    })
+    return (
+    this.handleListen(),
+    this.fetchRandomGif(),
     this.fetchRandomGif(),
     this.fetchRandomGif())
   }
 
-  handleResultsButtonClick = () => {
-    //push the browser to "/"
+
+  handleListen() {
+    if (this.state.listening) {
+      recognition.start()
+      recognition.onresult = function(event) {
+        let poem = event.results[0][0].transcript
+        this.setState({
+          capturedPoem: poem
+        })
+      }
+    } else {
+      console.log("not listeninggggg")
+    }
+    console.log("captured poem", this.state.capturedPoem)
   }
 
+
+  toggleListen = () => {
+    this.setState({
+      listening: !this.state.listening
+    })
+  }
+
+
+
+
+
   render() {
+    console.log(this.state.listening);
     return (
       <React.Fragment>
-        <Route exact path="/" component={() => <WelcomePage handleClick={this.handleWelcomeButtonClick} />} />
-        <Route path="/instructions" component={() => <InstructionsPage handleClick={this.handleInstructionsButtonClick} />} />
-        <Route path="/gifs" component={() => <GifPage gifs={this.state.gifs} handleClick={this.handleGetGifsClick} />} />
-        <Route path="/results" component={() => <ResultsPage handleClick={this.handleResultsButtonClick} />} />
+        <Route exact path="/" component={() => <WelcomePage />} />
+        <Route path="/instructions" component={() => <InstructionsPage handleGetGifsClick={this.handleGetGifsClick} />} />
+        <Route path="/gifs" component={() => <GifPage gifs={this.state.gifs} toggleListen={this.toggleListen} />} />
+        <Route path="/results" component={() => <ResultsPage />} />
       </React.Fragment>
     );
   }
