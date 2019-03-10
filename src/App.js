@@ -18,7 +18,7 @@ class App extends Component {
   state = {
     gifs: [],
     listening: false,
-    capturedPoem: ""
+    capturedPoem: []
   }
 
   fetchRandomGif = () => {
@@ -32,9 +32,9 @@ class App extends Component {
       }))
   }
 
-  handleGetGifsClick = () => {
+  toggleListenAndFetchGifs = () => {
     this.setState({
-      listening: true
+      listening: !this.state.listening
     }, () => this.handleListen())
     return (
     this.fetchRandomGif(),
@@ -45,26 +45,20 @@ class App extends Component {
 
   handleListen() {
     if (this.state.listening) {
+      let poem = []
       recognition.start()
-      recognition.onresult = function(event) {
-        let poem = event.results[0][0].transcript
+      // recognition.onend = () => recognition.start()
+      recognition.onresult = event => {
+        poem.push(event.results[0][0].transcript.toString())
         this.setState({
           capturedPoem: poem
         })
       }
+    } else {
+      recognition.end()
     }
-    console.log("captured poem", this.state.capturedPoem)
+    console.log("captured poem:", this.state.capturedPoem)
   }
-
-
-  toggleListen = () => {
-    this.setState({
-      listening: !this.state.listening
-    })
-  }
-
-
-
 
 
   render() {
@@ -72,8 +66,8 @@ class App extends Component {
     return (
       <React.Fragment>
         <Route exact path="/" component={() => <WelcomePage />} />
-        <Route path="/instructions" component={() => <InstructionsPage handleGetGifsClick={this.handleGetGifsClick} />} />
-        <Route path="/gifs" component={() => <GifPage gifs={this.state.gifs} toggleListen={this.toggleListen} />} />
+        <Route path="/instructions" component={() => <InstructionsPage toggleListenAndFetchGifs={this.toggleListenAndFetchGifs} />} />
+        <Route path="/gifs" component={() => <GifPage gifs={this.state.gifs} toggleListenAndFetchGifs={this.toggleListenAndFetchGifs} />} />
         <Route path="/results" component={() => <ResultsPage />} />
       </React.Fragment>
     );
