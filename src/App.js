@@ -32,19 +32,11 @@ class App extends Component {
       }))
   }
 
-  componentDidMount() {
-    return (this.fetchRandomGif(),
-            this.fetchRandomGif(),
-            this.fetchRandomGif())
-  }
-
   handleGetGifsClick = () => {
     this.setState({
-      gifs: [],
       listening: true
-    })
+    }, () => this.handleListen())
     return (
-    this.handleListen(),
     this.fetchRandomGif(),
     this.fetchRandomGif(),
     this.fetchRandomGif())
@@ -60,8 +52,6 @@ class App extends Component {
           capturedPoem: poem
         })
       }
-    } else {
-      console.log("not listeninggggg")
     }
     console.log("captured poem", this.state.capturedPoem)
   }
