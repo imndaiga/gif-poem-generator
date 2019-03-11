@@ -5,6 +5,7 @@ import WelcomePage from './WelcomePage'
 import InstructionsPage from './InstructionsPage'
 import GifPage from './GifPage'
 import ResultsPage from './ResultsPage'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition
 const recognition = new window.SpeechRecognition()
@@ -18,7 +19,7 @@ class App extends Component {
   state = {
     gifs: [],
     listening: false,
-    capturedPoem: []
+    capturedPoem: ""
   }
 
   fetchRandomGif = () => {
@@ -44,13 +45,17 @@ class App extends Component {
 
 
   handleListen = () => {
-    let poem = []
+    let poem = ''
     if (this.state.listening) {
       recognition.onstart = () => {console.log("listening!")}
       recognition.start()
       recognition.onend = () => recognition.start()
       recognition.onresult = event => {
-        poem.push(event.results[0][0].transcript)
+        poem = event.results[0][0].transcript
+        this.setState({
+          capturedPoem: poem
+        })
+        console.log("check stored poem in state:", this.state.capturedPoem)
       }
     } else {
       recognition.stop()
@@ -58,11 +63,6 @@ class App extends Component {
         console.log("stopped listening!")
       }
     }
-
-    this.setState({
-      capturedPoem: poem
-    })
-    console.log("check stored poem in state:", this.state.capturedPoem)
   }
 
   endListening = () => {
@@ -74,12 +74,14 @@ class App extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <Route exact path="/" component={() => <WelcomePage />} />
-        <Route path="/instructions" component={() => <InstructionsPage toggleListenOnAndFetchGifs={this.toggleListenOnAndFetchGifs} />} />
-        <Route path="/gifs" component={() => <GifPage gifs={this.state.gifs} endListening={this.endListening} />} />
-        <Route path="/results" component={() => <ResultsPage results={this.state.capturedPoem} />} />
-      </React.Fragment>
+      <Router>
+        <>
+          <Route exact path="/" component={() => <WelcomePage />} />
+          <Route path="/instructions" component={() => <InstructionsPage toggleListenOnAndFetchGifs={this.toggleListenOnAndFetchGifs} />} />
+          <Route path="/gifs" component={() => <GifPage gifs={this.state.gifs} endListening={this.endListening} />} />
+          <Route path="/results" component={() => <ResultsPage results={this.state.capturedPoem} />} />
+        </>
+      </Router>
     );
   }
 }

@@ -8,7 +8,7 @@ class ResultsPage extends React.Component {
       <React.Fragment>
         <div>
           Your poem:
-          {this.props.results ? this.props.results.join(" ") : "...isn't here yet."}
+          {this.props.results ? this.props.results: "...isn't here yet."}
         </div>
         <button><Link to ="/">Wonderful. Another go?</Link></button>
       </React.Fragment>
