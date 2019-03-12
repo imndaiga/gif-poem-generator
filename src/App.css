@@ -6,6 +6,7 @@
   height: 100%;
   min-height: 100vh;
   width: 100vw;
+  font-size: calc(12pt + 1em);
 }
 
 div.page {
@@ -13,4 +14,8 @@ div.page {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+div.page > * {
+  text-align: center;
 }
