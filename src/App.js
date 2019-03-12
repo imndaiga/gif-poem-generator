@@ -23,8 +23,8 @@ class App extends Component {
   }
 
   fetchRandomGif = () => {
-    const apiEndpoint = `https://api.giphy.com/v1/gifs/random`
-    const key = `1m9nu8Db8mkVi6w1H3eRiyTSc04gEUgJ`
+    const apiEndpoint = `${process.env.REACT_APP_GIPHY_API_ENDPOINT}`
+    const key = `${process.env.REACT_APP_GIPHY_API_KEY}`
     const fetchURL = `${apiEndpoint}?api_key=${key}`
     fetch(fetchURL)
       .then(resp => resp.json())
