@@ -10,7 +10,7 @@ class InstructionsPage extends React.Component {
         <p>Make sure you remember to take a small break (just a second will do) between each one.</p>
         <p>Then, we'll display the poem back to you.</p>
         <p>Voila!</p>
-        <button><Link to ="/gifs" onClick={() => this.props.toggleListenOnAndFetchGifs()}>Begin!</Link></button>
+        <Link className="nav" to="/gifs" onClick={() => this.props.toggleListenOnAndFetchGifs()}>Begin!</Link>
       </div>
     )
   }

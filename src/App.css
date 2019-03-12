@@ -19,3 +19,12 @@ div.page {
 div.page > * {
   text-align: center;
 }
+
+.nav {
+  border: none;
+  background-color: #4281A4;
+  text-decoration: none;
+  color: white;
+  padding: 1em 1.5em;
+  font-size: 0.8em;
+}

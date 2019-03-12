@@ -7,7 +7,7 @@ class ResultsPage extends React.Component {
     return(
       <div className="page" id="results">
         <p>Your poem: {this.props.results ? this.props.results: "...isn't here yet."}</p>
-        <button><Link to ="/">Wonderful. Another go?</Link></button>
+        <Link className="nav" to="/">Wonderful. Another go?</Link>
       </div>
     )
   }
