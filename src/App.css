@@ -25,6 +25,10 @@ div.page > * {
   text-align: center;
 }
 
+div.page > p {
+  margin: 0.2em;
+}
+
 .nav {
   border: none;
   background-color: #4281A4;
