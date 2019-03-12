@@ -13,7 +13,6 @@ const recognition = new window.SpeechRecognition()
 recognition.continous = true
 recognition.lang = 'en-US'
 
-
 class App extends Component {
 
   state = {
@@ -43,7 +42,6 @@ class App extends Component {
     this.fetchRandomGif())
   }
 
-
   handleListen = () => {
     let poem = ''
     if (this.state.listening) {
@@ -71,16 +69,15 @@ class App extends Component {
     }, () => this.handleListen())
   }
 
-
   render() {
     return (
       <Router>
-        <>
+        <div className="App">
           <Route exact path="/" component={() => <WelcomePage />} />
           <Route path="/instructions" component={() => <InstructionsPage toggleListenOnAndFetchGifs={this.toggleListenOnAndFetchGifs} />} />
           <Route path="/gifs" component={() => <GifPage gifs={this.state.gifs} endListening={this.endListening} />} />
           <Route path="/results" component={() => <ResultsPage results={this.state.capturedPoem} />} />
-        </>
+        </div>
       </Router>
     );
   }

@@ -5,13 +5,10 @@ class ResultsPage extends React.Component {
   render() {
     console.log("this.props.results", this.props.results);
     return(
-      <React.Fragment>
-        <div>
-          Your poem:
-          {this.props.results ? this.props.results: "...isn't here yet."}
-        </div>
+      <div className="page" id="results">
+        <p>Your poem: {this.props.results ? this.props.results: "...isn't here yet."}</p>
         <button><Link to ="/">Wonderful. Another go?</Link></button>
-      </React.Fragment>
+      </div>
     )
   }
 }
